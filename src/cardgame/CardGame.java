@@ -4,8 +4,9 @@
  */
 package cardgame;
 
-import cardgame.CardHandGenerator;
+import cardgame.CardGenerator;
 import cardgame.Card;
+import java.util.List;
 import java.util.Scanner;
 
 
@@ -20,39 +21,50 @@ public class CardGame {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        
-        Scanner input = new Scanner(System.in);
-        Card[] hand = CardHandGenerator.generateHand(7);
-        
-        //print each card so we can see what was generated
-        for (Card card : hand) {
-            System.out.println(card.getValue() + " of " + card.getSuit());
-        }
+        List<Card> deck = CardGenerator.generateDeck();
 
-        //ask user for Card
-        System.out.println("Please choose a suit for your lucky card:");
-        for (int i = 0; i < Card.Suit.values().length; i++) {
-            System.out.println((i + 1) + ": " + Card.Suit.values()[i]);
+        List<Card> h1 = CardGenerator.generateHand(7, deck);
+        List<Card> h2 = CardGenerator.generateHand(7, deck);
+        List<Card> h3 = CardGenerator.generateHand(7, deck);
+        List<Card> h4 = CardGenerator.generateHand(7, deck);
+        
+        for (Card c : deck) {
+            System.out.println(c.getValue() + " of " + c.getSuit());
         }
         
-        int suit = input.nextInt()-1;
-        System.out.println("Enter a value (1 to 13)");
-        int value = input.nextInt()-1;
-        //create new Card with the two values chosen
-        Card userGuess = new Card(Card.Value.values()[value], Card.Suit.values()[suit]);
+        System.out.println(deck.size());
 
-        //check if it matches
-        boolean match = false;
-        for (Card card : hand) {
-            if (card.getValue() == userGuess.getValue()
-                    && (card.getSuit().equals(userGuess.getSuit()))) {
-                match = true;
-                break;
-            }
         }
-        System.out.println(userGuess.getSuit() + " of " + userGuess.getValue());
-        System.out.println("Did you guess it? " + match);
+//        Scanner input = new Scanner(System.in);
+//        Card[] hand = CardHandGenerator.generateHand(7);
+//        
+//        //print each card so we can see what was generated
+//        for (Card card : hand) {
+//            System.out.println(card.getValue() + " of " + card.getSuit());
+//        }
+//
+//        //ask user for Card
+//        System.out.println("Please choose a suit for your lucky card:");
+//        for (int i = 0; i < Card.Suit.values().length; i++) {
+//            System.out.println((i + 1) + ": " + Card.Suit.values()[i]);
+//        }
+//        
+//        int suit = input.nextInt()-1;
+//        System.out.println("Enter a value (1 to 13)");
+//        int value = input.nextInt()-1;
+//        //create new Card with the two values chosen
+//        Card userGuess = new Card(Card.Value.values()[value], Card.Suit.values()[suit]);
+//
+//        //check if it matches
+//        boolean match = false;
+//        for (Card card : hand) {
+//            if (card.getValue() == userGuess.getValue()
+//                    && (card.getSuit().equals(userGuess.getSuit()))) {
+//                match = true;
+//                break;
+//            }
+//        }
+//        System.out.println(userGuess.getSuit() + " of " + userGuess.getValue());
+//        System.out.println("Did you guess it? " + match);
     }
-        
-}
 
