@@ -31,6 +31,11 @@ public class Card {
     public Suit getSuit() {
         return suit;
     }
+    
+    //Set Suit method to be called when a Crazy 8 is played
+    public void setSuit(Suit suit) {
+        this.suit = suit;
+    }
 
     @Override
     public boolean equals(Object obj) {

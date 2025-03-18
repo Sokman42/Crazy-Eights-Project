@@ -24,7 +24,7 @@ public class GameRules {
                                 DiscardPile discardPile, Settings settings) {
         Player player = players.get(currentPlayer);
         Scanner input = new Scanner(System.in);
-        System.out.println(player.getName() + "'s hand: " + player.getHand());
+        System.out.println(player.getName() + "'s hand: " + player.stringHand());
         System.out.println("Top card on discard pile: " + discardPile.getTopCard());
         System.out.println("Choose a card to play or draw from the pile:");
 
@@ -35,6 +35,9 @@ public class GameRules {
                 if (index == -1) {
                     if (drawPile.isEmpty()) {
                         System.out.println("Draw pile is empty. Cannot draw a card.");
+                        System.out.println("The game is over!");
+                        GameRules.countHands(players);
+                        break;
                     } else {
                         player.drawCard(drawPile);
                         System.out.println(player.getName() + " drew a card: " + player.getHand().get(player.getHand().size() - 1));
@@ -48,6 +51,15 @@ public class GameRules {
                         if (hasWon) {
                             System.out.println("Player " + player.getName() + " wins!");
                             return;
+                        }
+                        if (cardToPlay.getValue() == Card.Value.EIGHT) {
+                            System.out.println("CRAZY 8!!! Choose a suit for the next turn: ");
+                                for (int i = 0; i < Card.Suit.values().length; i++) {
+                                    System.out.println((i + 1) + ": " + Card.Suit.values()[i]);
+                            }
+                            int newSuit = input.nextInt() - 1;
+                            Card crazy = discardPile.getTopCard();
+                            crazy.setSuit(Card.Suit.values()[newSuit]);
                         }
                         break;
                     } else {
@@ -70,6 +82,27 @@ public class GameRules {
 
     private static void nextTurn(Settings settings) {
         currentPlayer = (currentPlayer + 1) % settings.getNumberOfPlayers();
+    }
+    
+    public static void countHands(ArrayList<Player> players) {
+        int smallestHand = 52;
+        List<String> winner = new ArrayList<>();
+        for (Player p : players) {
+            if (p.getHand().size() <= smallestHand) {
+                smallestHand = p.getHand().size();
+            }
+        }
+        for (Player p : players) {
+            if (p.getHand().size() == smallestHand) {
+                winner.add(p.getName());
+            }
+        }
+        if (winner.size() > 1) {
+            System.out.println(winner.toString() + ", the players with the smallest hands, tie for first place!");
+        }
+        else {
+            System.out.println(winner + ", the player with the smallest hand, is the winner!");
+        }
     }
 
     public static boolean checkWinCondition(Player player) {

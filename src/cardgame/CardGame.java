@@ -41,12 +41,18 @@ public class CardGame {
         
         //Game starts! Loop runs the rules of the game while players take turns
         //selecting cards from their hands.
-        while (GameRules.roundCount < 30) {
+        while (GameRules.roundCount <= 30) {
             GameRules.playTurn(players, drawPile, discardPile, settings);
             if (GameRules.checkWinCondition(players.get(GameRules.currentPlayer))) {
                 break;
             }
             GameRules.roundCount++;
+            if (GameRules.roundCount == 30){
+                System.out.println("Turn limit reached! The game is over.");
+                GameRules.countHands(players);
+                break;
+            }
+        
         }
 
     }

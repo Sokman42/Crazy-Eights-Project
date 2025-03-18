@@ -44,6 +44,14 @@ public class Player {
         return false; // Return false if the card was not in the player's hand
     }
 
+    public String stringHand() {
+        String stringHand = "";
+        for (Card c : hand) {
+            stringHand += "[" + this.hand.indexOf(c) + ":" + c.toString() + "] ";
+        }
+        return stringHand;
+    }
+    
     public List<Card> getHand() {
         return hand;
     }

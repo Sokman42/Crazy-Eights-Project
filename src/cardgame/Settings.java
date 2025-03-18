@@ -20,15 +20,24 @@ public class Settings {
     public Settings() {
         Scanner scn = new Scanner(System.in);
         System.out.println("Welcome to Crazy Eights! Prepare to get crazy!");
-        System.out.println("Start by entering the number of players (2-4):");
-        this.numberOfPlayers = scn.nextInt();
-        this.playerNames = new ArrayList<>();
-        for (int i = 0; i < numberOfPlayers; i++) {
+  
+        while (this.numberOfPlayers < 2 || this.numberOfPlayers > 4) {
+        try {
+            System.out.println("Start by entering the number of players (2-4):");
+            this.numberOfPlayers = scn.nextInt();
+        }
+        catch (Exception e) {
+            System.out.println("Invalid input. Please enter a number between 2-4.");
+            scn.next();
+        }
+        }
+            this.playerNames = new ArrayList<>();
+            for (int i = 0; i < numberOfPlayers; i++) {
             System.out.println("Enter Player Name: ");
             String name = scn.next();
             this.playerNames.add(name);
-        }
-    }
+            }
+        }       
 
     public int getNumberOfPlayers() {
         return numberOfPlayers;
