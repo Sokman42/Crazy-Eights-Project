@@ -4,15 +4,13 @@
  */
 package cardgame;
 
-import cardgame.CardGenerator;
-import cardgame.Card;
-import java.util.List;
-import java.util.Scanner;
+import java.util.ArrayList;
 
 
-/**
- *
- * @author soky4
+/**Java CardGame Class
+ *Crazy Eights Game
+ *Group 4
+ *Austin, Gowthaman, Udit
  */
 public class CardGame {
 
@@ -21,50 +19,35 @@ public class CardGame {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        List<Card> deck = CardGenerator.generateDeck();
-
-        List<Card> h1 = CardGenerator.generateHand(7, deck);
-        List<Card> h2 = CardGenerator.generateHand(7, deck);
-        List<Card> h3 = CardGenerator.generateHand(7, deck);
-        List<Card> h4 = CardGenerator.generateHand(7, deck);
+        //Initialize Game Settings, player count and player names
+        Settings settings = new Settings();
         
-        for (Card c : deck) {
-            System.out.println(c.getValue() + " of " + c.getSuit());
+        //Initialize new deck of 52 cards
+        ArrayList<Card> deck1 = CardGenerator.generateDeck();
+        
+        //Initialize Player list
+        ArrayList<Player> players = new ArrayList<>();
+        
+        //Generate hands for players, 7 cards each
+        for (int i = 0; i < settings.getNumberOfPlayers(); i++) {
+            ArrayList<Card> pHand = CardGenerator.generateHand(deck1);
+            Player player = new Player(pHand, settings.getPlayerNames().get(i));
+            players.add(player);
         }
         
-        System.out.println(deck.size());
-
+        //Convert remaining deck cards into discard and draw piles
+        DiscardPile discardPile = new DiscardPile(deck1);
+        DrawPile drawPile = new DrawPile(deck1);
+        
+        //Game starts! Loop runs the rules of the game while players take turns
+        //selecting cards from their hands.
+        while (GameRules.roundCount < 30) {
+            GameRules.playTurn(players, drawPile, discardPile, settings);
+            if (GameRules.checkWinCondition(players.get(GameRules.currentPlayer))) {
+                break;
+            }
+            GameRules.roundCount++;
         }
-//        Scanner input = new Scanner(System.in);
-//        Card[] hand = CardHandGenerator.generateHand(7);
-//        
-//        //print each card so we can see what was generated
-//        for (Card card : hand) {
-//            System.out.println(card.getValue() + " of " + card.getSuit());
-//        }
-//
-//        //ask user for Card
-//        System.out.println("Please choose a suit for your lucky card:");
-//        for (int i = 0; i < Card.Suit.values().length; i++) {
-//            System.out.println((i + 1) + ": " + Card.Suit.values()[i]);
-//        }
-//        
-//        int suit = input.nextInt()-1;
-//        System.out.println("Enter a value (1 to 13)");
-//        int value = input.nextInt()-1;
-//        //create new Card with the two values chosen
-//        Card userGuess = new Card(Card.Value.values()[value], Card.Suit.values()[suit]);
-//
-//        //check if it matches
-//        boolean match = false;
-//        for (Card card : hand) {
-//            if (card.getValue() == userGuess.getValue()
-//                    && (card.getSuit().equals(userGuess.getSuit()))) {
-//                match = true;
-//                break;
-//            }
-//        }
-//        System.out.println(userGuess.getSuit() + " of " + userGuess.getValue());
-//        System.out.println("Did you guess it? " + match);
+
     }
-
+}

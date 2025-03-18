@@ -1,7 +1,12 @@
 package cardgame;
 
+import java.util.Objects;
 
-
+/**Java Card Class
+ *Crazy Eights Game
+ *Group 4
+ *Austin, Gowthaman, Udit
+ */
 public class Card {
     //Example using Enum
     public enum Suit {
@@ -23,16 +28,28 @@ public class Card {
         return value;
     }
 
-    public void setValue(Value value) {
-        this.value = value;
-    }
-
     public Suit getSuit() {
         return suit;
     }
 
-    public void setSuit(Suit suit) {
-        this.suit = suit;
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Card card = (Card) obj;
+        return value == card.value && suit == card.suit;
     }
 
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 19 * hash + Objects.hashCode(this.value);
+        hash = 19 * hash + Objects.hashCode(this.suit);
+        return hash;
+    }
+
+    @Override
+    public String toString() {
+        return value + " of " + suit;
+    }
 }
