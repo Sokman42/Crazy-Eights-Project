@@ -10,3 +10,5 @@ Project is managed and edited by:
 Austin Sinclair
 
 Gowthaman Varatharajah
+
+Udit Singh
